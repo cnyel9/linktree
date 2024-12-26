@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Levi Setiadi - Linktree</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      #canvas-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      .card-hover {
+        transition: all 0.3s;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-5px) rotateX(10deg);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .glassmorphism {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      }
+
+      .social-icon {
+        transition: all 0.3s;
+      }
+
+      .social-icon:hover {
+        transform: translateY(-3px) scale(1.1);
+        filter: brightness(1.2);
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .profile-container {
+        animation: float 6s ease-in-out infinite;
+      }
+
+      .link-card {
+        transition: all 0.3s ease;
+        transform-style: preserve-3d;
+      }
+
+      .link-card:hover {
+        transform: scale(1.02) translateZ(20px);
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .animated-bg {
+        background: linear-gradient(-45deg, #232526, #414345, #2c3e50, #3b4485);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex items-center justify-center p-4 animated-bg">
+    <div id="canvas-container"></div>
+
+    <div class="container max-w-md mx-auto z-10">
+      <div class="glassmorphism rounded-3xl shadow-2xl p-8 text-center">
+        <!-- Profile Section -->
+        <div class="profile-container mb-12">
+          <div class="relative w-40 h-40 mx-auto mb-6">
+            <div
+              class="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 animate-spin-slow blur-md"
+            ></div>
+            <img
+              src="/myprofile.jpg"
+              alt="Profile"
+              class="w-36 h-36 rounded-full mx-auto relative z-10 border-4 border-white/30 object-cover"
+            />
+          </div>
+          <h1 class="text-4xl font-bold text-white mb-2 text-shadow">
+            Levi Setiadi
+          </h1>
+          <p class="text-xl text-white/80">My Projects</p>
+        </div>
+
+        <!-- Project Links -->
+        <div class="space-y-4">
+          <a
+            href="#"
+            onclick="openProjectModal('MCNine AI')"
+            class="link-card block p-4 rounded-xl glassmorphism hover:bg-white/20 transition-all duration-300"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-12 h-12 rounded-full flex items-center justify-center bg-blue-500/20"
+              >
+                <i class="fas fa-microchip text-2xl text-blue-400"></i>
+              </div>
+              <div class="flex-grow text-left">
+                <h3 class="text-xl font-bold text-white">MCNine AI</h3>
+                <p class="text-white/70">Advanced AI Assistant</p>
+              </div>
+              <i class="fas fa-chevron-right text-white/50"></i>
+            </div>
+          </a>
+
+          <!-- Repeat similar structure for other projects -->
+          <!-- Telegram Version -->
+          <a
+            href="#"
+            onclick="openProjectModal('MCNine Telegram')"
+            class="link-card block p-4 rounded-xl glassmorphism hover:bg-white/20 transition-all duration-300"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-12 h-12 rounded-full flex items-center justify-center bg-blue-500/20"
+              >
+                <i class="fas fa-paper-plane text-2xl text-blue-400"></i>
+              </div>
+              <div class="flex-grow text-left">
+                <h3 class="text-xl font-bold text-white">MCNine Telegram</h3>
+                <p class="text-white/70">Telegram Bot Service</p>
+              </div>
+              <i class="fas fa-chevron-right text-white/50"></i>
+            </div>
+          </a>
+
+          <!-- PITOPUP -->
+          <a
+            href="#"
+            onclick="openProjectModal('PITOPUP')"
+            class="link-card block p-4 rounded-xl glassmorphism hover:bg-white/20 transition-all duration-300"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-12 h-12 rounded-full flex items-center justify-center bg-green-500/20"
+              >
+                <i class="fas fa-shopping-cart text-2xl text-green-400"></i>
+              </div>
+              <div class="flex-grow text-left">
+                <h3 class="text-xl font-bold text-white">PITOPUP</h3>
+                <p class="text-white/70">Game Top-up Platform</p>
+              </div>
+              <i class="fas fa-chevron-right text-white/50"></i>
+            </div>
+          </a>
+
+          <!-- ALQURAN -->
+          <a
+            href="#"
+            onclick="openProjectModal('ALQURAN')"
+            class="link-card block p-4 rounded-xl glassmorphism hover:bg-white/20 transition-all duration-300"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-12 h-12 rounded-full flex items-center justify-center bg-green-500/20"
+              >
+                <i class="fas fa-book-quran text-2xl text-green-400"></i>
+              </div>
+              <div class="flex-grow text-left">
+                <h3 class="text-xl font-bold text-white">AL-Quran</h3>
+                <p class="text-white/70">AL-Quran Digital</p>
+              </div>
+              <i class="fas fa-chevron-right text-white/50"></i>
+            </div>
+          </a>
+
+          <!-- Kalkulator -->
+          <a
+            href="#"
+            onclick="openProjectModal('CALCULATOR')"
+            class="link-card block p-4 rounded-xl glassmorphism hover:bg-white/20 transition-all duration-300"
+          >
+            <div class="flex items-center space-x-4">
+              <div
+                class="w-12 h-12 rounded-full flex items-center justify-center bg-purple-500/20"
+              >
+                <i class="fas fa-calculator text-2xl text-purple-400"></i>
+              </div>
+              <div class="flex-grow text-left">
+                <h3 class="text-xl font-bold text-white">Calculator</h3>
+                <p class="text-white/70">Calculation with calculator</p>
+              </div>
+              <i class="fas fa-chevron-right text-white/50"></i>
+            </div>
+          </a>
+        </div>
+
+        <!-- Social Media Links -->
+        <div class="mt-12 flex justify-center space-x-8">
+          <a
+            href="https://web.facebook.com/winz.yt.9"
+            class="social-icon group"
+          >
+            <div
+              class="w-12 h-12 rounded-full flex items-center justify-center bg-[#3b5998]/20 group-hover:bg-[#3b5998]/30"
+            >
+              <i class="fab fa-facebook-f text-xl text-[#3b5998]"></i>
+            </div>
+          </a>
+          <a
+            href="https://www.instagram.com/y2el.nine/"
+            class="social-icon group"
+          >
+            <div
+              class="w-12 h-12 rounded-full flex items-center justify-center bg-[#E1306C]/20 group-hover:bg-[#E1306C]/30"
+            >
+              <i class="fab fa-instagram text-xl text-[#E1306C]"></i>
+            </div>
+          </a>
+          <a href="https://t.me/narisevip" class="social-icon group">
+            <div
+              class="w-12 h-12 rounded-full flex items-center justify-center bg-[#0088cc]/20 group-hover:bg-[#0088cc]/30"
+            >
+              <i class="fab fa-telegram-plane text-xl text-[#0088cc]"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Preview Project -->
+    <div
+      id="projectModal"
+      class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4 backdrop-blur-sm"
+    >
+      <div
+        class="bg-white/10 rounded-2xl max-w-md w-full p-6 relative glassmorphism"
+      >
+        <button
+          onclick="closeProjectModal()"
+          class="absolute top-4 right-4 text-white hover:text-red-500"
+        >
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+
+        <div id="modalContent" class="text-center">
+          <img
+            id="modalImage"
+            src=""
+            alt="Project Image"
+            class="w-full h-64 object-cover rounded-xl mb-6 aspect-video"
+          />
+
+          <h2 id="modalTitle" class="text-3xl font-bold text-white mb-3"></h2>
+          <p id="modalDescription" class="text-white/70 mb-6"></p>
+
+          <div class="flex space-x-4 justify-center">
+            <a
+              id="modalWebsiteLink"
+              href="#"
+              target="_blank"
+              class="px-8 py-3 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-white font-semibold hover:bg-white/20 transition-all duration-300 transform hover:-translate-y-1 shadow-lg flex items-center justify-center space-x-2"
+            >
+              <i class="fas fa-globe"></i>
+              <span>Learn More</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Three.js Setup
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      const renderer = new THREE.WebGLRenderer({ alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document
+        .getElementById("canvas-container")
+        .appendChild(renderer.domElement);
+
+      // Create floating particles
+      const particles = new THREE.Group();
+      const particleGeometry = new THREE.SphereGeometry(0.1, 8, 8);
+      const particleMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+      for (let i = 0; i < 100; i++) {
+        const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+        particle.position.set(
+          (Math.random() - 0.5) * 10,
+          (Math.random() - 0.5) * 10,
+          (Math.random() - 0.5) * 10
+        );
+        particle.userData = {
+          velocity: new THREE.Vector3(
+            (Math.random() - 0.5) * 0.01,
+            (Math.random() - 0.5) * 0.01,
+            (Math.random() - 0.5) * 0.01
+          ),
+        };
+        particles.add(particle);
+      }
+
+      scene.add(particles);
+      camera.position.z = 5;
+
+      // Animation
+      function animate() {
+        requestAnimationFrame(animate);
+
+        particles.children.forEach((particle) => {
+          particle.position.add(particle.userData.velocity);
+
+          if (particle.position.x > 5 || particle.position.x < -5)
+            particle.userData.velocity.x *= -1;
+          if (particle.position.y > 5 || particle.position.y < -5)
+            particle.userData.velocity.y *= -1;
+          if (particle.position.z > 5 || particle.position.z < -5)
+            particle.userData.velocity.z *= -1;
+        });
+
+        particles.rotation.x += 0.001;
+        particles.rotation.y += 0.001;
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      // Handle window resize
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // Project modal handling
+      const projectData = {
+        "MCNine AI": {
+          description:
+            "MCNine AI dirancang untuk membantu dan menjawab pertanyaan. MCNine AI ini sudah memiliki base Claude, GPT, Gemini.",
+          image: "/mcnineai.jpeg",
+          link: "https://mcnineai.vercel.app",
+          title: "MCNine AI",
+        },
+        "MCNine Telegram": {
+          description:
+            "Bot Telegram multifungsi dengan berbagai fitur canggih dan interaktif.",
+          image: "/aitele.jpg",
+          link: "https://t.me/ninjaaivip",
+          title: "MCNine Telegram",
+        },
+        PITOPUP: {
+          description:
+            "Platform top-up game terpercaya dengan berbagai metode pembayaran.",
+          image: "/pitopup.png",
+          link: "https://pitopup.com",
+          title: "PITOPUP",
+        },
+        ALQURAN: {
+          description:
+            "Aplikasi Al-Qur'an digital dengan fitur terjemahan dan audio.",
+          image: "/quran1.png",
+          link: "https://alquran-website.vercel.app",
+          title: "AL-Quran Digital",
+        },
+        CALCULATOR: {
+          description:
+            "Kalkulator modern dengan desain responsif dan fitur lengkap.",
+          image: "/kalkulator.png",
+          link: "https://calculatoor-apps.netlify.app",
+          title: "Calculator App",
+        },
+      };
+
+      function openProjectModal(projectName) {
+        const project = projectData[projectName];
+
+        // Set modal content
+        document.getElementById("modalImage").src = project.image;
+        document.getElementById("modalTitle").textContent = project.title;
+        document.getElementById("modalDescription").textContent =
+          project.description;
+        document.getElementById("modalWebsiteLink").href = project.link;
+
+        // Show modal
+        const modal = document.getElementById("projectModal");
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      }
+
+      function closeProjectModal() {
+        const modal = document.getElementById("projectModal");
+        modal.classList.remove("flex");
+        modal.classList.add("hidden");
+      }
+
+      // Close modal when clicking outside
+      document
+        .getElementById("projectModal")
+        .addEventListener("click", function (event) {
+          if (event.target === this) {
+            closeProjectModal();
+          }
+        });
+    </script>
+  </body>
+</html>
